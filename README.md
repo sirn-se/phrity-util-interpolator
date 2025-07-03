@@ -42,7 +42,7 @@ $result = $interpolator->interpolate('Interpolating {a.a} and {a.b} from {a}.', 
 // $result -> 'Interpolating first and second from array.'
 ```
 
-## Using the Interpolator trait
+## Using the InterpolatorTrait trait
 
 Interpolator is also available as trait method to be used in any class.
 
@@ -59,7 +59,7 @@ $result = $myClass->interpolate('Interpolating {a}', ['a' => 'b']);
 
 ## Defining path separator
 
-By default, paths are separated using `.` but it is possible to define another separator.
+By default, paths are separated using `"."` but it is possible to define another separator.
 
 ```php
 $separator = '/';
@@ -81,7 +81,7 @@ $result = $myClass->interpolate($input, $replacers, separator: $separator);
 
 To convert replacer values to strings the library uses [Phrity Transformers](https://phrity.sirn.se/util-transformer).
 
-The default configuration uses
+The default configuration uses;
 ```php
 $transformer = new Phrity\Util\Transformer\FirstMatchResolver([
     new Phrity\Util\Transformer\ReadableConverter(),
@@ -90,7 +90,7 @@ $transformer = new Phrity\Util\Transformer\FirstMatchResolver([
 ]);
 ```
 
-You can also set another transformer or set of transformers.
+You can also set another transformer (or set of transformers).
 
 ```php
 $transformer = new Phrity\Util\Transformer\JsonDecoder();
