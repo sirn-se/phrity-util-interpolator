@@ -5,8 +5,11 @@ namespace Phrity\Util\Interpolator;
 use Phrity\Util\DataAccessor;
 use Phrity\Util\Transformer\{
     BasicTypeConverter,
+    DateTimeConverter,
+    EnumConverter,
     FirstMatchResolver,
     ReadableConverter,
+    StringableConverter,
     ThrowableConverter,
     TransformerInterface,
     Type,
@@ -28,8 +31,11 @@ trait InterpolatorTrait
         TransformerInterface|null $transformer = null,
     ): string {
         $transformer = $transformer ?? new FirstMatchResolver([
+            new DateTimeConverter(),
+            new EnumConverter(),
             new ReadableConverter(),
             new ThrowableConverter(),
+            new StringableConverter(),
             new BasicTypeConverter(),
         ]);
         $accessor = new DataAccessor($replacers, $separator, $transformer);
