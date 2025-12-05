@@ -61,9 +61,11 @@ $result = $myClass->interpolate('Interpolating {a}', ['a' => 'b']);
 
 By default, paths are separated using `"."` but it is possible to define another separator.
 
+Path access uses [Phrity Accessor](https://phrity.sirn.se/util-accessor).
+
 ```php
 $separator = '/';
-$input = 'Interpolating {a.b} and {a.c}.';
+$input = 'Interpolating {a/b} and {a/c}.';
 $replacers = ['a' => '{"b": "test", "c": 1234}'];
 
 // Class
