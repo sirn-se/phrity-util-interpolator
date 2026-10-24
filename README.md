@@ -65,18 +65,23 @@ Path access uses [Phrity Accessor](https://phrity.sirn.se/util-accessor).
 
 ```php
 $separator = '/';
-$input = 'Interpolating {a/b} and {a/c}.';
-$replacers = ['a' => '{"b": "test", "c": 1234}'];
+$input = 'Interpolating {a/a} and {a/b}.';
+$replacers = [
+    'a' => [
+        'a' => 'first',
+        'b' => 'second',
+    ],
+];
 
 // Class
 $interpolator = new Phrity\Util\Interpolator\Interpolator(separator: $separator);
 $result = $interpolator->interpolate($input, $replacers);
-// $result -> 'Interpolating test.'
+// $result -> 'Interpolating first and second.'
 
 // Trait
 $myClass = new MyClass();
 $result = $myClass->interpolate($input, $replacers, separator: $separator);
-// $result -> 'Interpolating test.'
+// $result -> 'Interpolating first and second.'
 ```
 
 ## Defining value transformer
@@ -86,8 +91,11 @@ To convert replacer values to strings the library uses [Phrity Transformers](htt
 The default configuration uses;
 ```php
 $transformer = new Phrity\Util\Transformer\FirstMatchResolver([
+    new Phrity\Util\Transformer\DateTimeConverter(),
+    new Phrity\Util\Transformer\EnumConverter(),
     new Phrity\Util\Transformer\ReadableConverter(),
     new Phrity\Util\Transformer\ThrowableConverter(),
+    new Phrity\Util\Transformer\StringableConverter(),
     new Phrity\Util\Transformer\BasicTypeConverter(),
 ]);
 ```
@@ -114,4 +122,5 @@ $result = $myClass->interpolate($input, $replacers, transformer: $transformer);
 
 | Version | PHP | |
 | --- | --- | --- |
+| `1.1` | `^8.1` | Adding default transformers DateTime, Enum and Stringable |
 | `1.0` | `^8.1` | Initial version |

@@ -88,6 +88,14 @@ class InterpolatorTest extends TestCase
         $this->assertEquals('stringable: TestStringable', $result);
     }
 
+    public function testRootScalarInterpolation(): void
+    {
+        $interpolator = new Interpolator();
+        $replacers = '<string>';
+        $result = $interpolator->interpolate('Interpolating {.} and {0}.', $replacers);
+        $this->assertEquals('Interpolating <string> and {0}.', $result);
+    }
+
     public function testExceptionInterpolation(): void
     {
         $interpolator = new Interpolator();
@@ -113,6 +121,7 @@ class InterpolatorTest extends TestCase
         $transformer = new JsonDecoder();
         $interpolator = new Interpolator(transformer: $transformer);
         $replacers = ['a' => '{"b": "test", "c": 1234}'];
+        $replacers = '{"a": {"b": "test", "c": 1234}}';
         $result = $interpolator->interpolate('Interpolating {a.b} and {a.c}.', $replacers);
         $this->assertEquals('Interpolating test and 1234.', $result);
     }
