@@ -78,6 +78,16 @@ class InterpolatorTest extends TestCase
         $this->assertEquals('123, 45.67, true, false, null.', $result);
     }
 
+    public function testStringables(): void
+    {
+        $interpolator = new Interpolator();
+        $replacers = [
+            'stringable' => new StringableClass('TestStringable'),
+        ];
+        $result = $interpolator->interpolate(new StringableClass('stringable: {stringable}'), $replacers);
+        $this->assertEquals('stringable: TestStringable', $result);
+    }
+
     public function testExceptionInterpolation(): void
     {
         $interpolator = new Interpolator();
